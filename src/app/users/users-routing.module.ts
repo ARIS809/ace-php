@@ -1,45 +1,40 @@
 import { Injectable, NgModule } from '@angular/core';
 import { CommonModule, } from '@angular/common';
-import { BrowserModule  } from '@angular/platform-browser';
 import { Routes, RouterModule, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
-import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 
 import { CanActivate } from "@angular/router";
 import { Observable } from 'rxjs';
 
 
+//components
+import { UserAddEditComponent } from './user-add-edit/user-add-edit.component';
+import { UserListComponent } from './user-list/user-list.component';
+
 
 
 const routes: Routes =[
   {
-    path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full',
-  }, {
-    path: '',
-    component: AdminLayoutComponent,
-    children: [
-      {
-      path: '',
-      loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)
-    },
-   ]
+    path: 'list',
+    component:  UserListComponent,
+  }, 
+  {
+    path: 'add',
+    component:  UserAddEditComponent,
   },
   {
-    path: 'users',
-    children: [
-      {
-        path: '',
-        loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
-      },
-    ]
-  }
+    path: 'edit/:rowid',
+    component:  UserAddEditComponent,
+  }, 
+  {
+    path: '',
+    redirectTo: 'list',
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
   imports: [
     CommonModule,
-    BrowserModule,
     RouterModule.forRoot(routes,{
        useHash: true
     })
@@ -48,7 +43,7 @@ const routes: Routes =[
   ],
 })
 @Injectable()
-export class AppRoutingModule implements CanActivate {
+export class UsersRoutingModule implements CanActivate {
 
   constructor(
               private router:Router ){

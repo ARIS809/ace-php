@@ -1,0 +1,73 @@
+
+$bmd-btn-font-size: .875rem !default;
+$bmd-btn-font-size-lg: 1.25rem !default;
+$bmd-btn-font-size-sm: .6875rem !default; 
+$bmd-btn-margin-bottom: .3125rem !default; 
+
+$bmd-btn-color: $gray-dark !default;
+$bmd-btn-bg: transparent !default;
+$bmd-btn-border: #ccc !default;
+
+$bmd-btn-focus-bg: rgba(#999, .20) !default; 
+$bmd-btn-active-bg: rgba(#999, .40) !default;
+$bmd-btn-disabled: rgba($black, .26) !default;
+
+$bmd-inverse-btn-focus-bg: rgba(#ccc, .15) !default;
+$bmd-inverse-btn-active-bg: rgba(#ccc, .25) !default;
+$bmd-inverse-btn-disabled: rgba($white, .30) !default;
+
+$bmd-btn-fab-size: 3.5rem !default; 
+$bmd-btn-fab-size-sm: 2.5rem !default;
+$bmd-btn-fab-font-size: 1.5rem !default;
+
+$bmd-btn-icon-size: 2rem !default; 
+$bmd-btn-icon-size-sm: (.75 * $bmd-btn-icon-size) !default;
+$bmd-btn-icon-font-size-sm: (.75 * $bmd-btn-fab-font-size) !default;
+
+$input-btn-padding-x:                  1rem !default; 
+$input-btn-padding-y:                  .46875rem !default;
+$btn-font-weight:                400 !default; 
+$btn-box-shadow:                 none !default;
+$btn-active-box-shadow:          none !default;
+$btn-primary-color:              #fff !default;
+$btn-primary-bg:                 $brand-primary !default;
+$btn-primary-border-color:             $btn-primary-bg !default;
+
+$btn-secondary-color:            $gray-dark !default;
+$btn-secondary-bg:               $body-bg !default;
+$btn-secondary-border-color:           #ccc !default;
+
+$btn-info-color:                 #fff !default;
+$btn-info-bg:                    $brand-info !default;
+$btn-info-border-color:                $btn-info-bg !default;
+
+$btn-success-color:              #fff !default;
+$btn-success-bg:                 $brand-success !default;
+$btn-success-border-color:             $btn-success-bg !default;
+
+$btn-warning-color:              #fff !default;
+$btn-warning-bg:                 $brand-warning !default;
+$btn-warning-border-color:             $btn-warning-bg !default;
+
+$btn-danger-color:               #fff !default;
+$btn-danger-bg:                  $brand-danger !default;
+$btn-danger-border-color:              $btn-danger-bg !default;
+
+$btn-rose-color:                 #fff !default;
+$btn-rose-bg:                    $brand-rose !default;
+$btn-rose-border-color:              $btn-rose-bg !default;
+
+$btn-default-color:                 #fff !default;
+$btn-default-bg:                    $gray-color !default;
+$btn-default-border-color:              $btn-default-bg !default;
+
+$btn-link-disabled-color:        $gray-light !default;
+
+$input-btn-padding-x-sm:               1.25rem !default;
+$input-btn-padding-y-sm:               .40625rem !default;
+
+$input-btn-padding-y-lg:    1.125rem !default;
+$input-btn-padding-x-lg:    2.25rem  !default;
+
+$btn-border-radius-sm:             .1875rem !default;
+$border-radius-extreme:            2rem !default;

@@ -9,13 +9,13 @@ import 'rxjs/add/operator/map';
   providedIn: 'root',
 })
 export class LoginService {
-  configUrl = 'server/login.php';
+  configUrl = 'server/user.php';
   constructor(
     private http: HttpClient
   ) { }
 
-  getConfigResponse(): Observable<HttpResponse<{}>> {
-    return this.http.post(this.configUrl, { functionname: 'getName' }).pipe(
+  addUser(): Observable<HttpResponse<{}>> {
+    return this.http.post(this.configUrl, { functionname: 'addUser',  }).pipe(
       map((res: any) => {
         return res;
       })

@@ -58,4 +58,13 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'icons',          component: IconsComponent },
     { path: 'maps',           component: MapsComponent },
     { path: 'notifications',  component: NotificationsComponent },
+    {
+      path: 'users',
+      children: [
+        {
+          path: '',
+          loadChildren: () => import('../../users/users.module').then(m => m.UsersModule)
+        },
+      ]
+    }
 ];
