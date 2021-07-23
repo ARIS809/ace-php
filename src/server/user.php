@@ -2,6 +2,17 @@
 
 $arguments = json_decode(file_get_contents('php://input'));
 
+if($arguments->functionname === "getName"){
+    echo getName();
+}
+
+if($arguments->functionname === "getUsers"){
+    echo getUsers();
+}
+
+
+
+
 function addUser(){
     $conn = include 'DBSConnection.php';
 
@@ -46,7 +57,7 @@ function addUser(){
 
     $userArray = array();
     try {
-        $sql = "SELECT *FROM user";
+        $sql = "SELECT * FROM user";
         $result = $conn->query($sql);
 
         while ($row = mysqli_fetch_assoc($result)) {
@@ -70,11 +81,5 @@ function addUser(){
 
 
 
-if($arguments->functionname === "getName"){
-    echo getName();
-}
 
-if($arguments->functionname === "getUsers"){
-    echo getUsers();
-}
 ?>

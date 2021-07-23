@@ -25,10 +25,10 @@ export class UserService {
     );
   }
 
-  getUsers(): Observable<HttpResponse<{}>> {
+  getUsers(): Observable<User> {
     return this.http.post(this.configUrl, { functionname: 'getUsers' }).pipe(
       map((res: any) => {
-        return res;
+        return res.data;
       })
     );
   }

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 import { UserService } from 'services/user.service';
 
+//classes
+import { User } from 'app/classes/user-classes/user-classes.barrel';
+
 
 @Component({
   selector: 'user-list',
@@ -9,7 +12,7 @@ import { UserService } from 'services/user.service';
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
-
+  users:User;
   constructor(
     private service:UserService
   ) { }
@@ -20,7 +23,7 @@ export class UserListComponent implements OnInit {
 
   getUsers():void{
     this.service.getUsers().subscribe( (rep) =>{
-      console.log(rep);
+      this.users = rep;
     })
   }
 
