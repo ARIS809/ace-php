@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 //components
 import { UserAddEditComponent } from './user-add-edit/user-add-edit.component';
@@ -12,7 +13,8 @@ import { UsersRoutingModule } from './users-routing.module'
 @NgModule({
   imports: [
     CommonModule,
-    UsersRoutingModule
+    UsersRoutingModule,
+    MatFormFieldModule
   ],
   declarations: [
     UserAddEditComponent,

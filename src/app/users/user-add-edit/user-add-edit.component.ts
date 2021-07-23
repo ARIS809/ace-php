@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'app/classes/user-classes/user-class';
+
+//services
+import { UserService } from 'services/user.service';
+
 
 @Component({
   selector: 'user-add-edit',
@@ -7,7 +12,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserAddEditComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private _service:User
+  ) { }
 
   ngOnInit(): void {
   }

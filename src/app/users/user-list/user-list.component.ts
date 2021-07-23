@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+import { UserService } from 'services/user.service';
 
 
 @Component({
@@ -9,10 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserListComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private service:UserService
+  ) { }
 
   ngOnInit(): void {
+    this.getUsers()
+  }
 
+  getUsers():void{
+    this.service.getUsers().subscribe( (rep) =>{
+      console.log(rep);
+    })
   }
 
 }
