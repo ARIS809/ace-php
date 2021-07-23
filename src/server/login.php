@@ -1,17 +1,15 @@
 <?php
-$arguments = json_decode(file_get_contents('php://input'));
 
-function getName(){
-    $myObj = new \stdClass();
-    $myObj->name = "John";
-    $myObj->age = 30;
-    $myObj->city = "New York";
+$servername = "localhost";
+$username = "ace";
+$password = "Dominic@nxp5319";
 
-    $myJSON = json_encode($myObj);
+// Create connection
+$conn = new mysqli($servername, $username, $password);
 
-    return $myJSON;
- }
-if($arguments->functionname === "getName"){
-     echo $_SERVER['HTTP_HOST'];
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
 }
+echo $conn;
 ?>

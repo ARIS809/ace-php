@@ -19,6 +19,7 @@ import { MapsComponent } from './maps/maps.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 
 import { BrowserModule } from '@angular/platform-browser';
+import { AuthGuard } from 'app/shared/security/auth.guard';
 
 import {
   AgmCoreModule
@@ -46,7 +47,7 @@ import { LoginComponent } from './login/login.component';
     LoginComponent,
 
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,6 @@
 <?php
+include 'DBSConnection.php';
+
 $arguments = json_decode(file_get_contents('php://input'));
 
 function addUser(){
