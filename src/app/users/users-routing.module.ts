@@ -12,7 +12,7 @@ import { UserListComponent } from './user-list/user-list.component';
 
 
 
-const routes: Routes =[
+export const UserRoutes: Routes =[
   {
     path: 'list',
     component:  UserListComponent,
@@ -29,28 +29,8 @@ const routes: Routes =[
     path: '',
     redirectTo: 'list',
     pathMatch: 'full',
-  },
+  }
 ];
 
-@NgModule({
-  imports: [
-    CommonModule,
-    RouterModule.forRoot(routes,{
-       useHash: true
-    })
-  ],
-  exports: [
-  ],
-})
-@Injectable()
-export class UsersRoutingModule implements CanActivate {
 
-  constructor(
-              private router:Router ){
 
-  }
-  canActivate(route:ActivatedRouteSnapshot,
-              state:RouterStateSnapshot):Observable<boolean>{
-                return undefined
-              }
- }

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'app/classes/user-classes/user-class';
 
 //services
-import { UserService } from 'services/user.service';
+
 
 
 @Component({
@@ -11,10 +12,17 @@ import { UserService } from 'services/user.service';
   styleUrls: ['./user-add-edit.component.css']
 })
 export class UserAddEditComponent implements OnInit {
-
+  rowid:string = "0";
   constructor(
-    private _service:User
-  ) { }
+    private route:ActivatedRoute
+  ) { 
+    this.route.queryParams.subscribe(params => {
+      if(params['rowid'] != null)
+        this.rowid = params['rowid'];
+      else
+        this.rowid = "0";
+    });
+  }
 
   ngOnInit(): void {
   }

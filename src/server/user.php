@@ -78,8 +78,4 @@ function addUser(){
 
     return $myJSON;
  }
-
-
-
-
 ?>

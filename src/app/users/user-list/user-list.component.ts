@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'
+import {Location} from '@angular/common';
 
+//service
 import { UserService } from 'services/user.service';
 
 //classes
@@ -14,7 +17,9 @@ import { User } from 'app/classes/user-classes/user-classes.barrel';
 export class UserListComponent implements OnInit {
   users:User;
   constructor(
-    private service:UserService
+    private service:UserService,
+    private router:Router,
+    private location:Location,
   ) { }
 
   ngOnInit(): void {
@@ -25,6 +30,10 @@ export class UserListComponent implements OnInit {
     this.service.getUsers().subscribe( (rep) =>{
       this.users = rep;
     })
+  }
+
+  goToAddUser():void{
+    this.router.navigate(['/users/add']);
   }
 
 }

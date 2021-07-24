@@ -7,9 +7,6 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { CanActivate } from "@angular/router";
 import { Observable } from 'rxjs';
 
-
-
-
 const routes: Routes =[
   {
     path: '',
@@ -27,9 +24,11 @@ const routes: Routes =[
   },
   {
     path: 'users',
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
     children: [
       {
-        path: '',
+        path: 'users',
         loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
       },
     ]
