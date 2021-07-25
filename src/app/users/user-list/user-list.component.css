@@ -1,3 +1,7 @@
 .heading-style{
     font-weight: 500;
 }
+
+.cursor-pointer{
+    cursor: pointer;
+}

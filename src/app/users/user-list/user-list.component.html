@@ -23,6 +23,9 @@
                                     <th>
                                         DOB
                                     </th>
+                                    <th>
+                                        actions
+                                    </th>
                                 </thead>
                                 <tbody>
                                     <tr *ngFor="let u of users" >
@@ -36,8 +39,11 @@
                                             {{u.lname}}
                                         </td>
                                         <td>
-                                           {{u.dob}}
+                                           {{u.dob | date:'M/d/yyyy'}}
                                         </td>
+                                        <td>
+                                            <i class="material-icons text-danger cursor-pointer" (click)="deleteUser(u.rowid)">delete</i>
+                                         </td>
                                     </tr>
                                 </tbody>
                             </table>

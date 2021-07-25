@@ -14,6 +14,8 @@ import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { AuthGuard } from 'app/shared/security/auth.guard';
 
+import { ToastrModule } from 'ngx-toastr';
+
 import {
   AgmCoreModule
 } from '@agm/core';
@@ -32,7 +34,8 @@ import { LoginComponent } from './login/login.component';
     AgmCoreModule.forRoot({
       apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     }),
-    BrowserModule
+    BrowserModule,
+    ToastrModule.forRoot()
   ],
   declarations: [
     AppComponent,

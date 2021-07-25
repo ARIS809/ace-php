@@ -70,7 +70,6 @@ export class DashboardComponent implements OnInit {
   };
   ngOnInit() {
     this.loginservice.getConfigResponse().subscribe((rep)=>{
-      console.log(rep);
     })
       /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
 
