@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { User } from 'app/classes/user-classes/user-class';
 
 import { ToastrService } from 'ngx-toastr';
@@ -15,14 +15,17 @@ import { UserService } from 'services/user.service'
 })
 export class UserAddEditComponent implements OnInit {
   rowid:number = 0;
+  user:User;
 
   userForm = new FormGroup({
     fname: new FormControl('', [Validators.required]),
     lname: new FormControl('',[Validators.required]),
-    password: new FormControl('',[Validators.required]),
+    password: new FormControl('',[]),
     email: new FormControl('',[Validators.required,Validators.email]),
     dob: new FormControl('',[Validators.required]),
     user_name: new FormControl('',[Validators.required]),
+    profile_pic: new FormControl('',[]),
+    bio: new FormControl('',[])
   });
 
   constructor(
@@ -50,7 +53,9 @@ export class UserAddEditComponent implements OnInit {
       this.userForm.controls['password'].value,
       this.userForm.controls['dob'].value,
       this.userForm.controls['email'].value,
-      this.userForm.controls['user_name'].value
+      this.userForm.controls['user_name'].value,
+      this.userForm.controls['bio'].value,
+      this.rowid,
     ).subscribe( (rep) =>{
       if(rep.success)
       {
@@ -64,7 +69,8 @@ export class UserAddEditComponent implements OnInit {
 
   getUser():void{
     this._service.getUser(this.rowid).subscribe( (rep) =>{
-      console.log(rep);
+      this.user = new User(rep[0]);
+      this.userForm.patchValue(this.user);
     })
   }
 

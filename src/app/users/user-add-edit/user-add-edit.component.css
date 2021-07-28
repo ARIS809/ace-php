@@ -1,0 +1,44 @@
+.t-s-10{
+    padding-top: 10%;
+}
+
+.great-container{
+    width: 100%;
+}
+
+
+ 
+ @media (max-width: 2000px) { 
+    .profile-img{
+        padding-left: 40%;
+    }
+    .img-view {
+        width: 20%;
+    } 
+    .img-input{
+        padding-left: 45%;
+    }
+ }
+ 
+ @media (max-width: 500px) { 
+    .profile-img{
+        padding-left: 30%;
+    }
+    .img-view {
+        width: 40%;
+    } 
+    .img-input{
+        padding-left: 35%;
+    }
+ }
+ @media (max-width: 330px) { 
+    .profile-img{
+        padding-left: 30%;
+    }
+    .img-view {
+        width: 40%;
+    } 
+    .img-input{
+        padding-left: 25%;
+    }
+ }

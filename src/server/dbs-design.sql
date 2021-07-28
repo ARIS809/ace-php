@@ -6,6 +6,7 @@ CREATE TABLE users (
   lname varchar(100) not null,
   dob datetime not null,
   password varchar(250) not null,
-  email varchar(250) not null
+  email varchar(250) not null,
+  bio varchar(250) not null
   primary key(rowid)
 )

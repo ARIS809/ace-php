@@ -17,8 +17,16 @@ export class UserService {
     private http: HttpClient
   ) { }
 
-  addUser(fname:string, lname:string, password:string, dob:string, email:string, user_name:string): Observable<{success:boolean}> {
-    return this.http.post(this.configUrl, { functionname: 'addUser', fname:fname,lname:lname,password:password,dob:dob,email:email,user_name:user_name }).pipe(
+  addUser(fname:string, lname:string, password:string, dob:string, email:string, user_name:string, bio:string, rowid:number): Observable<{success:boolean}> {
+    let sendData = { fname:fname,
+                     lname:lname,
+                     password:password,
+                     dob:dob,
+                     email:email,
+                     user_name:user_name,
+                     rowid:rowid,
+                     bio:bio };
+    return this.http.post(this.configUrl, { functionname: 'addUser' , ...sendData}).pipe(
       map((res: any) => {
         return res;
       })

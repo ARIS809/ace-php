@@ -33,7 +33,6 @@ export class UserListComponent implements OnInit {
   getUsers():void{
     this.service.getUsers().subscribe( (rep) =>{
       this.users = rep;
-      console.log("here")
     })
   }
 
