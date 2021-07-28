@@ -4,16 +4,14 @@ $arguments = json_decode(file_get_contents('php://input'));
 
 if($arguments->functionname === "addUser"){
     echo addUser();
-}
-
-if($arguments->functionname === "getUsers"){
+}else if($arguments->functionname === "deleteUser"){
+    echo deleteUser();
+}else if($arguments->functionname === "getUsers"){
     echo getUsers();
 }
-
-if($arguments->functionname === "deleteUser"){
-    echo deleteUser();
+else if($arguments->functionname === "getUser"){
+    echo getUser();
 }
-
 
 function addUser(){
     $arguments = json_decode(file_get_contents('php://input'));
@@ -27,12 +25,13 @@ function addUser(){
     try {
        
         // prepare and bind
-        $stmnt = $conn->prepare("INSERT INTO `user` (`fname`, `lname`, `email`, `pswd`, `dob`) VALUES (?, ?, ?, ?, ?);");
-        $stmnt->bind_param("sssss", $fname, $lname, $email, $password, $dob);
+        $stmnt = $conn->prepare("INSERT INTO `user` (`fname`, `lname`, `email`, `password`, `dob`, `user_name`) VALUES (?, ?, ?, ?, ?, ?);");
+        $stmnt->bind_param("ssssss", $fname, $lname, $email, $password, $dob, $user_name);
         
         $fname = $arguments->fname;
         $lname = $arguments->lname;
         $email = $arguments->email;
+        $user_name = $arguments->user_name;
         //hash the password for security using the ripemd160 algorithm
         $password = hash('ripemd160', $arguments->password);
         $dob = $arguments->dob;
@@ -73,7 +72,7 @@ function addUser(){
     $userArray = array();
 
     try {
-        $sql = "SELECT * FROM user";
+        $sql = "SELECT fname, lname, dob, rowid FROM user";
         $result = $conn->query($sql);
 
         while ($row = mysqli_fetch_assoc($result)) {
@@ -94,6 +93,50 @@ function addUser(){
 
     return $myJSON;
  }
+
+ function getUser(){
+    //fetch the arguments sent to the function 
+    $arguments = json_decode(file_get_contents('php://input'));
+    //create connection to DBS
+   $conn = include 'DBSConnection.php';
+   //create an object theat will be return as the server response.
+   $myObj = new \stdClass();
+   $myObj->response = "";
+   $myObj->success = false;
+   $myObj->data = "";
+
+   //create an array
+   $userArray = array();
+
+   try {
+        $rowid = $arguments->rowid;
+        $stmt = " SELECT fname, lname, dob, rowid 
+                  FROM user 
+                  WHERE rowid = " . $rowid . "
+                  AND active = b'1'";
+
+        $result = $conn->query($stmt);
+
+        while ($row = mysqli_fetch_assoc($result)) {
+            $userArray[] = $row;
+        }
+
+
+       $myObj->data = $userArray;
+
+       $myObj->success = true;
+       $myObj->response = "User have been fetched.";
+
+   } catch (Exception $e) {
+       $myObj->response = $e->getMessage();
+       $myObj->success = false;
+   }
+
+   $myJSON = json_encode($myObj);
+
+   return $myJSON;
+}
+
 
  function deleteUser(){
     $arguments = json_decode(file_get_contents('php://input'));

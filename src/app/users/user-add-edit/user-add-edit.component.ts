@@ -14,7 +14,7 @@ import { UserService } from 'services/user.service'
   styleUrls: ['./user-add-edit.component.css']
 })
 export class UserAddEditComponent implements OnInit {
-  rowid:string = "0";
+  rowid:number = 0;
 
   userForm = new FormGroup({
     fname: new FormControl('', [Validators.required]),
@@ -22,6 +22,7 @@ export class UserAddEditComponent implements OnInit {
     password: new FormControl('',[Validators.required]),
     email: new FormControl('',[Validators.required,Validators.email]),
     dob: new FormControl('',[Validators.required]),
+    user_name: new FormControl('',[Validators.required]),
   });
 
   constructor(
@@ -30,15 +31,15 @@ export class UserAddEditComponent implements OnInit {
     private toast: ToastrService,
     private router:Router
   ) { 
-    this.route.queryParams.subscribe(params => {
-      if(params['rowid'] != null)
-        this.rowid = params['rowid'];
+    if(this.route.snapshot.params.rowid != null || this.route.snapshot.params.rowid != undefined)
+        this.rowid = parseInt(this.route.snapshot.params.rowid);
       else
-        this.rowid = "0";
-    });
+        this.rowid = 0;
   }
 
   ngOnInit(): void {
+    if(this.rowid != 0)
+      this.getUser();
 
   }
 
@@ -48,7 +49,8 @@ export class UserAddEditComponent implements OnInit {
       this.userForm.controls['lname'].value,
       this.userForm.controls['password'].value,
       this.userForm.controls['dob'].value,
-      this.userForm.controls['email'].value
+      this.userForm.controls['email'].value,
+      this.userForm.controls['user_name'].value
     ).subscribe( (rep) =>{
       if(rep.success)
       {
@@ -57,6 +59,12 @@ export class UserAddEditComponent implements OnInit {
       }else{
         this.toast.error("a database error occured. Please, contact support.")
       }
+    })
+  }
+
+  getUser():void{
+    this._service.getUser(this.rowid).subscribe( (rep) =>{
+      console.log(rep);
     })
   }
 

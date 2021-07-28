@@ -4,11 +4,16 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header card-header-danger">
-                        <h4 class="card-title">{{rowid == "0"? "Add User":"Edit User"}}</h4>
+                        <h4 class="card-title">{{rowid == 0? "Add User":"Edit User"}}</h4>
                     </div>
                     <div class="card-body">
                         <form [formGroup]="userForm" (ngSubmit)="saveUser()">
                             <div class="row">
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width">
+                                      <input matInput placeholder="User Name" type="text" formControlName="user_name">
+                                    </mat-form-field>
+                                </div>
                                 <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
                                       <input matInput placeholder="Email address" type="email" formControlName="email">
@@ -39,7 +44,7 @@
                                   </mat-form-field>
                                 </div>
                             </div>
-                            <button [disabled]="!this.userForm.valid" mat-raised-button type="submit" class="btn btn-danger pull-right">{{rowid == "0"? "Add User":"Edit User"}}</button>
+                            <button [disabled]="!this.userForm.valid" mat-raised-button type="submit" class="btn btn-danger pull-right">{{rowid == 0? "Add User":"Edit User"}}</button>
                             <div class="clearfix"></div>
                         </form>
                     </div>

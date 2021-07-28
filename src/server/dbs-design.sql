@@ -5,6 +5,7 @@ CREATE TABLE users (
   fname varchar(100) not null,
   lname varchar(100) not null,
   dob datetime not null,
-  pswd varchar(250) not null,
+  password varchar(250) not null,
+  email varchar(250) not null
   primary key(rowid)
 )

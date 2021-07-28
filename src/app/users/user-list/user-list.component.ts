@@ -10,6 +10,8 @@ import { UserService } from 'services/user.service';
 import { User } from 'app/classes/user-classes/user-classes.barrel';
 
 
+
+
 @Component({
   selector: 'user-list',
   templateUrl: './user-list.component.html',
@@ -31,6 +33,7 @@ export class UserListComponent implements OnInit {
   getUsers():void{
     this.service.getUsers().subscribe( (rep) =>{
       this.users = rep;
+      console.log("here")
     })
   }
 

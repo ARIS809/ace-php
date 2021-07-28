@@ -17,8 +17,8 @@ export class UserService {
     private http: HttpClient
   ) { }
 
-  addUser(fname:string, lname:string, password:string, dob:string, email:string): Observable<{success:boolean}> {
-    return this.http.post(this.configUrl, { functionname: 'addUser', fname:fname,lname:lname,password:password,dob:dob,email:email }).pipe(
+  addUser(fname:string, lname:string, password:string, dob:string, email:string, user_name:string): Observable<{success:boolean}> {
+    return this.http.post(this.configUrl, { functionname: 'addUser', fname:fname,lname:lname,password:password,dob:dob,email:email,user_name:user_name }).pipe(
       map((res: any) => {
         return res;
       })
@@ -32,10 +32,19 @@ export class UserService {
       })
     );
   }
+
   deleteUser(rowid:number): Observable<{success:boolean}> {
     return this.http.post(this.configUrl, { functionname: 'deleteUser',rowid:rowid }).pipe(
       map((res: any) => {
         return res;
+      })
+    );
+  }
+
+  getUser(rowid:number):Observable<User>{
+    return this.http.post(this.configUrl, { functionname: 'getUser', rowid:rowid }).pipe(
+      map((res: any) => {
+        return res.data;
       })
     );
   }

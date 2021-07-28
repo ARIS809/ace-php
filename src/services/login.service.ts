@@ -14,8 +14,8 @@ export class LoginService {
     private http: HttpClient
   ) { }
 
-  getConfigResponse(): Observable<HttpResponse<{}>> {
-    return this.http.post(this.configUrl, { functionname: 'getName' }).pipe(
+  checkIfEmailExist(email:string): Observable<HttpResponse<{}>> {
+    return this.http.post(this.configUrl, { functionname: 'getName' ,email:email}).pipe(
       map((res: any) => {
         return res;
       })

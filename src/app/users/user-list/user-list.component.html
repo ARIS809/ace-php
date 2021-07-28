@@ -28,8 +28,8 @@
                                     </th>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let u of users" >
-                                        <td>
+                                    <tr *ngFor="let u of users" [routerLink]="'/users/edit/'+u.rowid">
+                                        <td >
                                             {{u.rowid}}
                                         </td>
                                         <td>
