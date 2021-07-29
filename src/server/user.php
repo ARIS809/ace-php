@@ -2,19 +2,28 @@
 
 $arguments = json_decode(file_get_contents('php://input'));
 
-if($arguments->functionname === "addUser"){
-    echo addUser();
-}else if($arguments->functionname === "deleteUser"){
-    echo deleteUser();
-}else if($arguments->functionname === "getUsers"){
-    echo getUsers();
-}
-else if($arguments->functionname === "getUser"){
-    echo getUser();
+if($arguments !== null){
+    if($arguments->functionname === "deleteUser"){
+        echo deleteUser();
+    }else if($arguments->functionname === "getUsers"){
+        echo getUsers();
+    }
+    else if($arguments->functionname === "getUser"){
+        echo getUser();
+    }
+}else{
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // collect value of input field
+        $functionname = $_POST['functionname'];
+
+        if($functionname === "addUser"){
+            
+            echo addUser();
+        }
+    }
 }
 
 function addUser(){
-    $arguments = json_decode(file_get_contents('php://input'));
     $conn = include 'DBSConnection.php';
     include_once 'query_param.php';
 
@@ -24,24 +33,29 @@ function addUser(){
     $myObj->data = "";
 
     try {
-        if(property_exists($arguments, 'rowid') and $arguments->rowid === 0){
+        if($_POST['rowid'] == 0){
             //random bytes
             $bytes = openssl_random_pseudo_bytes(2);
             $pwd = bin2hex($bytes);
             // prepare and bind
-            $stmnt = $conn->prepare("INSERT INTO `user` (`fname`, `lname`, `email`, `password`, `dob`, `user_name`, `bio`) VALUES (?, ?, ?, ?, ?, ?, ?);");
-            $stmnt->bind_param("sssssss", $fname, $lname, $email, $password, $dob, $user_name, $bio);
+            $stmnt = $conn->prepare("INSERT INTO `user` (`fname`, `lname`, `email`, `password`, `dob`, `user_name`, `bio`, `profile_pic`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
+            $stmnt->bind_param("ssssssss", $fname, $lname, $email, $password, $dob, $user_name, $bio, $profile_pic);
             
-            $fname = $arguments->fname;
-            $lname = $arguments->lname;
-            $email = $arguments->email;
-            $user_name = $arguments->user_name;
-            $bio = $arguments->bio;
+            $fname = $_POST['fname'];
+            $lname = $_POST['lname'];
+            $email = $_POST['email'];
+            $user_name = $_POST['user_name'];
+            $bio = $_POST['bio'];
             //hash the password for security using the ripemd160 algorithm
             $password = hash('ripemd160', $pwd);
-            $dob = $arguments->dob;
+            $dob = $_POST['dob'];
+            if(basename($_FILES["profile_pic"]["name"]) !== null){
+                $profile_pic = str_replace(' ', '-', $_POST["rowid"].'-'.time().'-'.basename($_FILES["profile_pic"]["name"]));
+            }else{
+                $profile_pic = null;
+            }
         }else{
-            if(property_exists($arguments, 'password') and $arguments->password !== ''){
+            if($_POST['password'] !== ''){
                 // prepare and bind (password gets changed)
                 $stmnt = $conn->prepare("UPDATE `user` 
                             SET `fname` = ? ,
@@ -50,19 +64,25 @@ function addUser(){
                                 `password` = ? ,
                                 `dob` = ? ,
                                 `user_name` = ? ,
-                                `bio` = ?  
+                                `bio` = ? ,
+                                `profile_pic` = ?
                                 WHERE `rowid` = ?");
 
-                $stmnt->bind_param("sssssssi", $fname, $lname, $email, $password, $dob, $user_name, $bio, $rowid);
+                $stmnt->bind_param("ssssssssi", $fname, $lname, $email, $password, $dob, $user_name, $bio, $profile_pic, $rowid, );
 
-                $fname = queryParam('string',$arguments->fname);
-                $lname = queryParam('string',$arguments->lname);
-                $email = queryParam('string',$arguments->email);
-                $password = queryParam('string',hash('ripemd160', $arguments->password));
-                $dob = queryParam('datetime',$arguments->dob);
-                $user_name = queryParam('string',$arguments->user_name);
-                $bio = queryParam('string',$arguments->bio);
-                $rowid = queryParam('integer',$arguments->rowid);
+                $fname = queryParam('string',$_POST['fname']);
+                $lname = queryParam('string',$_POST['lname']);
+                $email = queryParam('string',$_POST['email']);
+                $password = queryParam('string',hash('ripemd160', $_POST['password']));
+                $dob = queryParam('datetime',$_POST['dob']);
+                $user_name = queryParam('string',$_POST['user_name']);
+                $bio = queryParam('string',$_POST['bio']);
+                $rowid = queryParam('integer',$_POST['rowid']);
+                if(basename($_FILES["profile_pic"]["name"]) !== null){
+                    $profile_pic = str_replace(' ', '-', $_POST["rowid"].'-'.time().'-'.basename($_FILES["profile_pic"]["name"]));
+                }else{
+                    $profile_pic = null;
+                }
 
             }else{
                 // prepare and bind (password gets changed)
@@ -72,31 +92,36 @@ function addUser(){
                                 `email` = ? ,
                                 `dob` = ? ,
                                 `user_name` = ? ,
-                                `bio` = ? 
+                                `bio` = ? ,
+                                `profile_pic` = ?
                                 WHERE `rowid` = ?");
 
-                $stmnt->bind_param("ssssssi", $fname, $lname, $email, $dob, $user_name, $bio, $rowid);
-
-                $fname = queryParam('string',$arguments->fname);
-                $lname = queryParam('string',$arguments->lname);
-                $email = queryParam('string',$arguments->email);
-                $dob = queryParam('datetime',$arguments->dob);
-                $user_name = queryParam('string',$arguments->user_name);
-                $bio = queryParam('string',$arguments->bio);
-                $rowid = queryParam('integer',$arguments->rowid);
+                $stmnt->bind_param("sssssssi", $fname, $lname, $email, $dob, $user_name, $bio,  $profile_pic, $rowid,);
+                $fname = queryParam('string',$_POST['fname']);
+                $lname = queryParam('string',$_POST['lname']);
+                $email = queryParam('string',$_POST['email']);
+                $dob = queryParam('datetime',$_POST['dob']);
+                $user_name = queryParam('string',$_POST['functionname']);
+                $bio = queryParam('string',$_POST['bio']);
+                $rowid = queryParam('integer',$_POST['rowid']);
+                $profile_pic = queryParam('string',"here");
+                if(basename($_FILES["profile_pic"]["name"]) !== null){
+                    $profile_pic = str_replace(' ', '-', $_POST["rowid"].'-'.time().'-'.basename($_FILES["profile_pic"]["name"]));
+                }else{
+                    $profile_pic = null;
+                }
             }
         }
 
         $result = $stmnt->execute();
         
-
         $stmnt->close();
         $conn->close(); 
 
         if($result)
-            $msg_resp = "User Saved";
+            $msg_resp = "User updated";
         else
-            $msg_resp = "a database error has occured. Please, contact support.";
+            $msg_resp = str_replace(' ', '-', $_POST["rowid"].'-'.time().'-'.basename($_FILES["profile_pic"]["name"]));
 
         $myObj->success = $result;
         $myObj->response =  $msg_resp;
@@ -104,7 +129,6 @@ function addUser(){
         $myObj->response = $e->getMessage();
         $myObj->success = false;
     }
-
     $myJSON = json_encode($myObj);
 
     return $myJSON;

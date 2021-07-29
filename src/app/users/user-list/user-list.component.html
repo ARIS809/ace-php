@@ -28,17 +28,17 @@
                                     </th>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let u of users" [routerLink]="'/users/edit/'+u.rowid">
-                                        <td >
+                                    <tr *ngFor="let u of users" >
+                                        <td [routerLink]="'/users/edit/'+u.rowid">
                                             {{u.rowid}}
                                         </td>
-                                        <td>
+                                        <td [routerLink]="'/users/edit/'+u.rowid">
                                             {{u.fname}} 
                                         </td>
-                                        <td>
+                                        <td [routerLink]="'/users/edit/'+u.rowid">
                                             {{u.lname}}
                                         </td>
-                                        <td>
+                                        <td [routerLink]="'/users/edit/'+u.rowid">
                                            {{u.dob | date:'M/d/yyyy'}}
                                         </td>
                                         <td>

@@ -8,6 +8,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatRippleModule} from '@angular/material/core';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 //components
 import { UserAddEditComponent } from './user-add-edit/user-add-edit.component';
@@ -29,7 +30,8 @@ import { UserRoutes } from './users-routing.module'
     MatInputModule,
     MatRippleModule,
     MatTooltipModule,
-    MatSelectModule
+    MatSelectModule,
+    ImageCropperModule
   ],
   declarations: [
     UserAddEditComponent,

@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { LocationStrategy, HashLocationStrategy, APP_BASE_HREF } from '@angular/common';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 
 import { AppRoutingModule } from './app.routing';
@@ -35,7 +36,8 @@ import { LoginComponent } from './login/login.component';
       apiKey: 'AIzaSyBqLUKbhhaedF0LgQmnIlaRUrmEJpabybY'
     }),
     BrowserModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    ImageCropperModule
   ],
   declarations: [
     AppComponent,
