@@ -6,19 +6,23 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 
 import { CanActivate } from "@angular/router";
 import { Observable } from 'rxjs';
+import { AuthGuard } from './shared/security/auth.guard';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes =[
   {
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',
+    canActivate:[AuthGuard]
   }, {
     path: '',
     component: AdminLayoutComponent,
     children: [
       {
       path: '',
-      loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)
+      loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule),
+      canActivate:[AuthGuard]
     },
    ]
   },
@@ -29,9 +33,25 @@ const routes: Routes =[
     children: [
       {
         path: 'users',
-        loadChildren: () => import('./users/users.module').then(m => m.UsersModule)
+        loadChildren: () => import('./users/users.module').then(m => m.UsersModule),
+        canActivate:[AuthGuard]
       },
     ]
+  },
+  {
+    path: 'logout',
+    pathMatch: 'full',
+    children: [
+      {
+        path: 'logout',
+        loadChildren: () => import('./logout/logout.module').then(m => m.LogoutModule),
+        canActivate:[AuthGuard]
+      },
+    ]
+  },
+  {
+    path: 'login',
+    component:LoginComponent
   }
 ];
 
@@ -47,14 +67,5 @@ const routes: Routes =[
   ],
 })
 @Injectable()
-export class AppRoutingModule implements CanActivate {
-
-  constructor(
-              private router:Router ){
-
-  }
-  canActivate(route:ActivatedRouteSnapshot,
-              state:RouterStateSnapshot):Observable<boolean>{
-                return undefined
-              }
+export class AppRoutingModule {
  }

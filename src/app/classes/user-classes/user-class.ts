@@ -8,6 +8,7 @@ export class User {
     user_name:string;
     bio:string;
     profile_pic:string;
+    role:string;
     
     constructor(user?: any) {
       this.rowid = user.rowid;
@@ -19,5 +20,6 @@ export class User {
       this.user_name = user.user_name;
       this.bio = user.bio;
       this.profile_pic = user.profile_pic;
+      this.role = user.role;
     }
   }

@@ -21,14 +21,14 @@
                                         Last Name
                                     </th>
                                     <th>
-                                        DOB
+                                        Role
                                     </th>
                                     <th>
                                         actions
                                     </th>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let u of users" >
+                                    <tr *ngFor="let u of users" style="cursor: pointer;">
                                         <td [routerLink]="'/users/edit/'+u.rowid">
                                             {{u.rowid}}
                                         </td>
@@ -39,7 +39,7 @@
                                             {{u.lname}}
                                         </td>
                                         <td [routerLink]="'/users/edit/'+u.rowid">
-                                           {{u.dob | date:'M/d/yyyy'}}
+                                           {{u.role}}
                                         </td>
                                         <td>
                                             <i class="material-icons text-danger cursor-pointer" (click)="deleteUser(u.rowid)">delete</i>

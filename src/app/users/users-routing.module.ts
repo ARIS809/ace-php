@@ -24,7 +24,11 @@ export const UserRoutes: Routes =[
   {
     path: 'edit/:rowid',
     component:  UserAddEditComponent,
-  }, 
+  },
+  {
+    path: 'profile',
+    component:  UserAddEditComponent,
+  },
   {
     path: '',
     redirectTo: 'list',

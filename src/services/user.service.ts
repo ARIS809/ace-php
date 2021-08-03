@@ -35,7 +35,6 @@ export class UserService {
   // }
 
   addUser(form:FormData): Observable<{success:boolean}> {
-    console.log(location.origin);
     this.profilePicUpload(form).subscribe( (rep) =>{
     })
     return this.http.post(this.configUrl, form).pipe(

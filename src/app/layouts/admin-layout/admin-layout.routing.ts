@@ -66,5 +66,15 @@ export const AdminLayoutRoutes: Routes = [
           loadChildren: () => import('../../users/users.module').then(m => m.UsersModule)
         },
       ]
-    }
+    },
+    {
+      path: 'logout',
+      children: [
+        {
+          path: '',
+          loadChildren: () => import('../../logout/logout.module').then(m => m.LogoutModule)
+        },
+      ]
+    },
+    
 ];

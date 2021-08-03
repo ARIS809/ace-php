@@ -21,7 +21,7 @@ function queryParam($type, $value){
 function checkString($value){
     $myValue = "";
     if(is_string($value)){
-        $myValue = $value;
+        $myValue = strval($value);
     }else{
         $myValue = "";
     }

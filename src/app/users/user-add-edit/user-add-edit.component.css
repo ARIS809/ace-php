@@ -13,8 +13,8 @@
         padding-left: 35%;
     }
     .img-view {
-        width: 250px; 
-        height: 200px; 
+        width: 230px; 
+        height: 180px;  
         object-fit: cover;
     } 
     .img-input{
@@ -27,8 +27,8 @@
         padding-left: 10%;
     }
     .img-view {
-        width: 250px; 
-        height: 200px; 
+        width: 230px; 
+        height: 180px; 
         object-fit: cover;
     } 
     .img-input{
@@ -40,8 +40,8 @@
         padding-left: 15%;
     }
     .img-view {
-        width: 250px; 
-        height: 200px; 
+        width: 230px; 
+        height: 180px; 
         object-fit: cover;
     } 
     .img-input{

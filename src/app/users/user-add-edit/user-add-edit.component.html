@@ -2,7 +2,7 @@
     <div class="container-fluid">
       <div class="card">
           <div class="card-header card-header-danger">
-              <h4 class="card-title">{{rowid == 0? "Add User":"Edit User"}}</h4>
+              <h4 class="card-title">{{userButtonLanguage()}}</h4>
           </div>
         <div class="card-body">
             <form [formGroup]="userForm" (ngSubmit)="saveUser()"  method="post" enctype="multipart/form-data">
@@ -10,8 +10,8 @@
                     <div class="">
                         <div class="">
                             <a href="javascript:void(0)" class="profile-img">
-                                <img *ngIf="rowid != 0" class="img" class="img-view" style="border-radius: 50%;" [src]="this.profileUrl+this.user.profile_pic" />
-                                <img *ngIf="rowid == 0" class="img" class="img-view" style="border-radius: 50%;" src="./assets/img/faces/no-user.jpeg" />
+                                <img *ngIf="rowid != 0 &&  user.profile_pic !== null" class="img" class="img-view" style="border-radius: 50%;" [src]="this.profileUrl+this.user.profile_pic" />
+                                <img *ngIf="rowid == 0 || user.profile_pic == null" class="img" class="img-view" style="border-radius: 50%;" src="./assets/img/faces/no-user.jpeg" />
                                 
                                 <mat-form-field >
                                     <input matInput class="img-input" type="file" name="profile_pic" (change)="uploadDocument($event)" accept=".png, .pdf, .jpg, .jpeg">
@@ -20,7 +20,7 @@
                         </div>
                         <div class="row">
                             <div class="card-body">
-                                <p class="card-description">
+                                <p class="">
                                     <mat-form-field class="example-full-width">
                                         <input matInput placeholder="Bio" type="text" formControlName="bio">
                                     </mat-form-field>
@@ -45,6 +45,15 @@
                             <input matInput placeholder="Password" type="password" formControlName="password">
                         </mat-form-field>
                     </div>
+                    <div class="col-md-3">
+                        <mat-form-field class="example-full-width">
+                            <mat-select formControlName="role" placeholder="Role">
+                                <mat-option value="Super">Super</mat-option>
+                                <mat-option value="Admin">Admin</mat-option>
+                                <mat-option value="User">User</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
@@ -65,7 +74,7 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <button [disabled]="!this.userForm.valid" mat-raised-button type="submit" class="btn btn-danger pull-right">{{rowid == 0? "Add User":"Edit User"}}</button>
+                <button [disabled]="!this.userForm.valid" mat-raised-button type="submit" class="btn btn-danger pull-right">{{userButtonLanguage()}}</button>
                 <div class="clearfix"></div>
             </form>
         </div>

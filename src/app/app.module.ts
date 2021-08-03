@@ -14,8 +14,10 @@ import { AppComponent } from './app.component';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { AuthGuard } from 'app/shared/security/auth.guard';
+import { AuthGuardService } from 'services/auth-guard.service';
 
 import { ToastrModule } from 'ngx-toastr';
+import { LoginModule }  from './login/login.module';
 
 import {
   AgmCoreModule
@@ -37,14 +39,14 @@ import { LoginComponent } from './login/login.component';
     }),
     BrowserModule,
     ToastrModule.forRoot(),
-    ImageCropperModule
+    ImageCropperModule,
+
   ],
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    LoginComponent,
   ],
-  providers: [ {provide: APP_BASE_HREF, useValue: '/'}],
+  providers: [ {provide: APP_BASE_HREF, useValue: '/',},AuthGuard,AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

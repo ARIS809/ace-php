@@ -38,8 +38,8 @@ function addUser(){
             $bytes = openssl_random_pseudo_bytes(2);
             $pwd = bin2hex($bytes);
             // prepare and bind
-            $stmnt = $conn->prepare("INSERT INTO `user` (`fname`, `lname`, `email`, `password`, `dob`, `user_name`, `bio`, `profile_pic`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
-            $stmnt->bind_param("ssssssss", $fname, $lname, $email, $password, $dob, $user_name, $bio, $profile_pic);
+            $stmnt = $conn->prepare("INSERT INTO `user` (`fname`, `lname`, `email`, `password`, `dob`, `user_name`, `bio`, `profile_pic`, `role`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
+            $stmnt->bind_param("sssssssss", $fname, $lname, $email, $password, $dob, $user_name, $bio, $profile_pic, $role);
             
             $fname = $_POST['fname'];
             $lname = $_POST['lname'];
@@ -49,10 +49,10 @@ function addUser(){
             //hash the password for security using the ripemd160 algorithm
             $password = hash('ripemd160', $pwd);
             $dob = $_POST['dob'];
-            if(basename($_FILES["profile_pic"]["name"]) !== null){
+            $role = queryParam('string',$_POST['role']);
+            if($_POST['pic_available'] == true){
                 $profile_pic = str_replace(' ', '-', $_POST["rowid"].'-'.time().'-'.basename($_FILES["profile_pic"]["name"]));
-            }else{
-                $profile_pic = null;
+                uploadPicture($profile_pic,queryParam('integer',$_POST['rowid']));
             }
         }else{
             if($_POST['password'] !== ''){
@@ -65,10 +65,10 @@ function addUser(){
                                 `dob` = ? ,
                                 `user_name` = ? ,
                                 `bio` = ? ,
-                                `profile_pic` = ?
+                                `role` = ?
                                 WHERE `rowid` = ?");
 
-                $stmnt->bind_param("ssssssssi", $fname, $lname, $email, $password, $dob, $user_name, $bio, $profile_pic, $rowid, );
+                $stmnt->bind_param("ssssssssi", $fname, $lname, $email, $password, $dob, $user_name, $bio, $role, $rowid );
 
                 $fname = queryParam('string',$_POST['fname']);
                 $lname = queryParam('string',$_POST['lname']);
@@ -78,10 +78,10 @@ function addUser(){
                 $user_name = queryParam('string',$_POST['user_name']);
                 $bio = queryParam('string',$_POST['bio']);
                 $rowid = queryParam('integer',$_POST['rowid']);
-                if(basename($_FILES["profile_pic"]["name"]) !== null){
+                $role = queryParam('string',$_POST['role']);
+                if($_POST['pic_available'] == true){
                     $profile_pic = str_replace(' ', '-', $_POST["rowid"].'-'.time().'-'.basename($_FILES["profile_pic"]["name"]));
-                }else{
-                    $profile_pic = null;
+                    uploadPicture($profile_pic,queryParam('integer',$_POST['rowid']));
                 }
 
             }else{
@@ -93,22 +93,21 @@ function addUser(){
                                 `dob` = ? ,
                                 `user_name` = ? ,
                                 `bio` = ? ,
-                                `profile_pic` = ?
+                                `role` = ? 
                                 WHERE `rowid` = ?");
 
-                $stmnt->bind_param("sssssssi", $fname, $lname, $email, $dob, $user_name, $bio,  $profile_pic, $rowid,);
+                $stmnt->bind_param("sssssssi", $fname, $lname, $email, $dob, $user_name, $bio, $role, $rowid, );
                 $fname = queryParam('string',$_POST['fname']);
                 $lname = queryParam('string',$_POST['lname']);
                 $email = queryParam('string',$_POST['email']);
                 $dob = queryParam('datetime',$_POST['dob']);
-                $user_name = queryParam('string',$_POST['functionname']);
+                $user_name = queryParam('string',$_POST['user_name']);
                 $bio = queryParam('string',$_POST['bio']);
                 $rowid = queryParam('integer',$_POST['rowid']);
-                $profile_pic = queryParam('string',"here");
-                if(basename($_FILES["profile_pic"]["name"]) !== null){
+                $role = queryParam('string',$_POST['role']);
+                if($_POST['pic_available'] == true){
                     $profile_pic = str_replace(' ', '-', $_POST["rowid"].'-'.time().'-'.basename($_FILES["profile_pic"]["name"]));
-                }else{
-                    $profile_pic = null;
+                    uploadPicture($profile_pic,queryParam('integer',$_POST['rowid']));
                 }
             }
         }
@@ -148,7 +147,7 @@ function addUser(){
     $userArray = array();
 
     try {
-        $sql = "SELECT fname, lname, dob, rowid FROM user";
+        $sql = "SELECT fname, lname, dob, rowid, role FROM user";
         $result = $conn->query($sql);
 
         while ($row = mysqli_fetch_assoc($result)) {
@@ -196,7 +195,8 @@ function addUser(){
                          email, 
                          active,
                          bio,
-                         profile_pic
+                         profile_pic,
+                         role
                   FROM user 
                   WHERE rowid = " . queryParam('integer',$rowid) . "
                   AND active = b'1'";
@@ -261,5 +261,31 @@ function addUser(){
     $myJSON = json_encode($myObj);
 
     return $myJSON;
+ }
+
+ function uploadPicture($profile_pic, $rowid){
+    $conn = include 'DBSConnection.php';
+    $isUploaded = false;
+    try {
+        // prepare and bind (password gets changed)
+        $stmnt = $conn->prepare("UPDATE `user` 
+        SET `profile_pic` = ?
+        WHERE `rowid` = ?");
+
+        $stmnt->bind_param("si", $myProfilePic, $rowid );
+        $rowid = queryParam('integer',$rowid);
+
+        $myProfilePic = $profile_pic;
+         
+        $isUploaded = $stmnt->execute();
+
+        $stmnt->close();
+        $conn->close(); 
+        
+    }catch(Exception $e){
+        $isUploaded = false;
+    }
+    return $isUploaded;
+    
  }
 ?>

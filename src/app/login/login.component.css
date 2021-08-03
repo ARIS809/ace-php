@@ -1,0 +1,25 @@
+.example-card {
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+    margin-bottom: auto;
+    height: 400px;
+  }
+  
+  .example-header-image {
+    background-size: cover;
+  }
+.img-class{
+    margin-left: 105%;
+}
+.subtitle{
+  margin-left: 105%;
+}
+.btn-class{
+  margin-left: 37%;
+}
+.form-style{
+    padding-top: 15%;
+}
+  

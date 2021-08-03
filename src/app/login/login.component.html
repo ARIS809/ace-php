@@ -1,1 +1,33 @@
-<p>login works!</p>
+<mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>
+          <img class="img-class" width="100px" src="assets/img/ace-login.svg">
+      </mat-card-title>
+      <mat-card-subtitle > 
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="form-style">
+            <form [formGroup]="loginForm" (ngSubmit)="login()" method="post" enctype="multipart/form-data">
+                <div class="column">
+                    <div >
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Email address" type="email" formControlName="email">
+                        </mat-form-field>
+                    </div>
+                    <div >
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Password" type="password" formControlName="password">
+                        </mat-form-field>
+                    </div>
+
+                    <div>
+                        <div  class="btn-class">   
+                            <button [disabled]="!this.loginForm.valid" mat-raised-button type="submit" class="btn btn-danger">Login</button>
+                        </div>
+                    </div>
+                </div>
+          </form>
+        </div>
+    </mat-card-content>
+</mat-card>
