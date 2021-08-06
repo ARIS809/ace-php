@@ -20,17 +20,6 @@ export class UserAddEditComponent implements OnInit {
   profileUrl = location.origin+'/ace_file_upload/uploads/profile_pics/';
   isMyprofile = false;
 
-  // userForm = new FormGroup({
-  //   fname: new FormControl('', [Validators.required]),
-  //   lname: new FormControl('',[Validators.required]),
-  //   password: new FormControl('',[]),
-  //   email: new FormControl('',[Validators.required,Validators.email]),
-  //   dob: new FormControl('',[Validators.required]),
-  //   user_name: new FormControl('',[Validators.required]),
-  //   profile_pic: new FormControl('',[]),
-  //   bio: new FormControl('',[])
-  // });
-
     userForm = this.fb.group({
         fname: ['', [Validators.required]],
         role: ['',[ Validators.required ]],
@@ -50,7 +39,6 @@ export class UserAddEditComponent implements OnInit {
     private router:Router,
     private fb: FormBuilder
   ) { 
-    console.log(this.router.url);
     if(this.route.snapshot.params.rowid != null || this.route.snapshot.params.rowid != undefined)
         this.rowid = parseInt(this.route.snapshot.params.rowid);
     else if(this.router.url === "/users/profile"){
@@ -74,15 +62,18 @@ export class UserAddEditComponent implements OnInit {
     uploadData.append(property, this.userForm.value[property]);
   }
   uploadData.append('functionname', 'addUser');
-  uploadData.append('rowid', JSON.stringify(this.rowid));
+  uploadData.append('rowid', this.rowid.toString());
   uploadData.append('profile_pic', this.userForm.get('profile_pic').value);
-  uploadData.append('pic_available', this.userForm.get('profile_pic').value == null? 'false':'true');
 
     this._service.addUser(uploadData).subscribe( (rep) =>{
       if(rep.success)
       {
         this.toast.success("User Saved","Adding a User");
-        this.router.navigate(['/users/list']);
+        if(this.isMyprofile)
+          this.router.navigate(['/dashboard']);
+        else
+          this.router.navigate(['/users/list']);
+
       }else{
         this.toast.error("a database error occured. Please, contact support.")
       }
@@ -93,7 +84,7 @@ export class UserAddEditComponent implements OnInit {
     this._service.getUser(this.rowid).subscribe( (rep) =>{
       this.user = new User(rep[0]);
       this.userForm.patchValue(this.user);
-      this.userForm.get('profile_pic').setValue(null);
+      this.userForm.get('profile_pic').setValue('');
     })
   }
 

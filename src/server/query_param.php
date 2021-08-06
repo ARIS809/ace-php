@@ -13,10 +13,13 @@ function queryParam($type, $value){
     }else if(strtolower($type) === 'bit' ){
         return checkBit($value);
 
+    }else if(strtolower($type) === 'char' ){
+        return checkChar($value);
+
     }else{
-        return null;
+            return null;
+        }
     }
-}
 
 function checkString($value){
     $myValue = "";
@@ -55,6 +58,17 @@ function checkBit($value){
         $myValue = $value;
     }else{
         $myValue = null;
+    }
+    return $myValue;
+}
+
+function checkChar($value){
+    $myValue = null;
+
+    if(strlen(is_string($value)) === 1){
+        $myValue = strval($value);
+    }else{
+        $myValue = "";
     }
     return $myValue;
 }

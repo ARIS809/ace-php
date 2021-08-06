@@ -31,7 +31,7 @@ function addUser(){
     $myObj->response = "";
     $myObj->success = false;
     $myObj->data = "";
-
+    $profile_pic = null;
     try {
         if($_POST['rowid'] == 0){
             //random bytes
@@ -50,7 +50,7 @@ function addUser(){
             $password = hash('ripemd160', $pwd);
             $dob = $_POST['dob'];
             $role = queryParam('string',$_POST['role']);
-            if($_POST['pic_available'] == true){
+            if (isset($_FILES['profile_pic'])) {
                 $profile_pic = str_replace(' ', '-', $_POST["rowid"].'-'.time().'-'.basename($_FILES["profile_pic"]["name"]));
                 uploadPicture($profile_pic,queryParam('integer',$_POST['rowid']));
             }
@@ -79,11 +79,10 @@ function addUser(){
                 $bio = queryParam('string',$_POST['bio']);
                 $rowid = queryParam('integer',$_POST['rowid']);
                 $role = queryParam('string',$_POST['role']);
-                if($_POST['pic_available'] == true){
+                if (isset($_FILES['profile_pic'])) {
                     $profile_pic = str_replace(' ', '-', $_POST["rowid"].'-'.time().'-'.basename($_FILES["profile_pic"]["name"]));
                     uploadPicture($profile_pic,queryParam('integer',$_POST['rowid']));
                 }
-
             }else{
                 // prepare and bind (password gets changed)
                 $stmnt = $conn->prepare("UPDATE `user` 
@@ -105,7 +104,7 @@ function addUser(){
                 $bio = queryParam('string',$_POST['bio']);
                 $rowid = queryParam('integer',$_POST['rowid']);
                 $role = queryParam('string',$_POST['role']);
-                if($_POST['pic_available'] == true){
+                if (isset($_FILES['profile_pic'])) {
                     $profile_pic = str_replace(' ', '-', $_POST["rowid"].'-'.time().'-'.basename($_FILES["profile_pic"]["name"]));
                     uploadPicture($profile_pic,queryParam('integer',$_POST['rowid']));
                 }
@@ -136,7 +135,9 @@ function addUser(){
 
  function getUsers(){
      //create connection to DBS
+    $arguments = json_decode(file_get_contents('php://input'));
     $conn = include 'DBSConnection.php';
+    include_once 'query_param.php';
     //create an object theat will be return as the server response.
     $myObj = new \stdClass();
     $myObj->response = "";
@@ -145,9 +146,19 @@ function addUser(){
 
     //create an array
     $userArray = array();
+    $userid = queryParam('integer',$arguments->userid);
 
     try {
-        $sql = "SELECT fname, lname, dob, rowid, role FROM user";
+        $sql = "SELECT 
+                fname, 
+                lname, 
+                dob, 
+                rowid, 
+                role 
+                FROM user
+                WHERE rowid <> {$userid}
+                AND active = b'1'";
+
         $result = $conn->query($sql);
 
         while ($row = mysqli_fetch_assoc($result)) {
@@ -234,9 +245,8 @@ function addUser(){
     $myObj->data = "";
 
     try {
-       
         // prepare and bind
-        $stmnt = $conn->prepare("DELETE FROM `user` WHERE `rowid` = ?");
+        $stmnt = $conn->prepare("UPDATE `user` SET active = b'0' WHERE `rowid` = ?");
         $stmnt->bind_param("i", $rowid);
         
         $rowid = $arguments->rowid;
@@ -266,6 +276,7 @@ function addUser(){
  function uploadPicture($profile_pic, $rowid){
     $conn = include 'DBSConnection.php';
     $isUploaded = false;
+    
     try {
         // prepare and bind (password gets changed)
         $stmnt = $conn->prepare("UPDATE `user` 
@@ -274,6 +285,7 @@ function addUser(){
 
         $stmnt->bind_param("si", $myProfilePic, $rowid );
         $rowid = queryParam('integer',$rowid);
+        
 
         $myProfilePic = $profile_pic;
          

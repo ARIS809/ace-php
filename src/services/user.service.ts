@@ -54,7 +54,8 @@ export class UserService {
 
 
   getUsers(): Observable<User> {
-    return this.http.post(this.configUrl, { functionname: 'getUsers' }).pipe(
+    let userid = JSON.parse(sessionStorage.getItem('currentUser')).rowid;
+    return this.http.post(this.configUrl, { functionname: 'getUsers' ,userid:userid}).pipe(
       map((res: any) => {
         return res.data;
       })

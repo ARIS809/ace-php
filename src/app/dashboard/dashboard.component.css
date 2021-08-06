@@ -1,0 +1,50 @@
+
+.card {
+  max-width: 400px;
+  padding-bottom: 5%;
+}
+
+.example-header-image {
+  background-size: cover;
+}
+@media (max-width: 3000px) { 
+  .posting-view{
+    margin-left: 35%; 
+  }
+  .menu{
+    max-width: 400px;
+    height: 10px;
+    padding-bottom: 5%;
+  }
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}
+
+@media (max-width: 1000px) { 
+  .posting-view{
+    margin-left: 10%; 
+  }
+  .menu{
+    max-width: 400px;
+    height: 10px;
+    padding-bottom: 5%;
+  }
+}
+
+@media (max-width: 500px) { 
+  .posting-view{
+    margin-left: 0%; 
+  }
+  .menu{
+    max-width: 400px;
+    height: auto;
+    padding-bottom: 5%;
+  }
+}
+
+.user_name{
+  padding-top:20%;
+  font-weight: bold;
+}

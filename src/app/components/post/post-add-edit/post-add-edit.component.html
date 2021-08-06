@@ -1,0 +1,28 @@
+
+<div class="card-header card-header-danger">
+    <h4 class="card-title">Add Post</h4>
+</div>
+<div class="card-body">
+    <form [formGroup]="postForm" (ngSubmit)="savePost()"  method="post" enctype="multipart/form-data">
+        <div class="column" >
+            <div class="">
+                <div class="">
+                    <a href="javascript:void(0)" class="profile-img">
+                        <mat-form-field >
+                            <input matInput class="img-input" type="file" name="image" (change)="uploadDocument($event)" accept=".png, .pdf, .jpg, .jpeg">
+                        </mat-form-field>
+                        <img class="selected-img-style" *ngIf="imageSrc!= null" [src]="imageSrc" alt="Selected Image" />
+                    </a>
+                </div>
+                <div class="row">
+                    <div class="card-body">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Caption" type="text" formControlName="caption">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button [disabled]="!this.postForm.valid" mat-raised-button type="submit" class="btn btn-danger pull-right">Post</button>
+        <div class="clearfix"></div>
+    </form>
