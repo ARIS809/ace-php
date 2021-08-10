@@ -22,7 +22,7 @@ export class UserAddEditComponent implements OnInit {
 
     userForm = this.fb.group({
         fname: ['', [Validators.required]],
-        role: ['',[ Validators.required ]],
+        role: ['',[ ]],
         lname: ['',[Validators.required]],
         password: ['',[]],
         email: ['',[Validators.required,Validators.email]],
