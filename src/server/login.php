@@ -9,6 +9,7 @@
   }
 
   function checkIfEmailExist(){
+    include_once 'query_param.php';
     $arguments = json_decode(file_get_contents('php://input'));
 
     //create connection to DBS
@@ -18,30 +19,40 @@
     $myObj->response = "";
     $myObj->success = false;
     $myObj->data = "";
+    $userArray = array();
 
     try{
-      //prepara and create query statement
-      $stmnt = $conn->prepare("SELECT `rowid` FROM `user` WHERE `email` = ? ;");
-      $stmnt->bind_param("s",$arguments->email);
-      $result = $stmnt->execute();
+      $email = queryParam('string', $arguments->email);
+      //hash the password
+      $stmt = " SELECT rowid
+                FROM user 
+                WHERE email = '{$email}'";
+      
+      $result = $conn->query($stmt);
+      
+      while ($row = mysqli_fetch_assoc($result)) {
+          $userArray[] = $row;
+      }
 
       $myObj->response = "";
       $myObj->success = true;
-      $myObj->data = $result;
+      $myObj->emailExist = count($userArray);
 
-      $stmnt->close();
       $conn->close();
 
     }catch(Exception $error){
       $myObj->response = $error;
       $myObj->success = false;
     } 
+    $myJSON = json_encode($myObj);
+
+    return $myJSON;
   
   }
 
   function login(){
     //query param is used to clean variables before gettng them sent to the DBS
-    include 'query_param.php';
+    include_once 'query_param.php';
     //fetch arguments sent
     $arguments = json_decode(file_get_contents('php://input'));
     //create connection to DBS

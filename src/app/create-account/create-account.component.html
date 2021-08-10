@@ -1,0 +1,62 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="card">
+          <div class="card-header card-header-danger">
+              <h4 class="card-title">Create Account</h4>
+          </div>
+        <div class="card-body">
+            <form [formGroup]="userForm" (ngSubmit)="saveUser()"  method="post" enctype="multipart/form-data">
+                <div class="column" >
+                    <div class="">
+                        <div class="row">
+                            <div class="card-body">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="User Name" type="text" formControlName="user_name">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Email address" type="email" (focusout)="checkIfEmailExist($event.target.value)" formControlName="email">
+                            <mat-error *ngIf="emailExist">
+                                This email is already in used, please user another.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Password" type="password" formControlName="password">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Fist Name" type="text" formControlName="fname">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Last Name" type="text" formControlName="lname">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Date of Birth" type="date" formControlName="dob">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <button [disabled]="!this.userForm.valid" mat-raised-button type="submit" class="btn btn-danger pull-right">create account</button>
+                <div class="clearfix"></div>
+            </form>
+        </div>
+      </div>
+  </div>
+  

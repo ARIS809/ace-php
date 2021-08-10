@@ -13,6 +13,7 @@ import {MatCardModule} from '@angular/material/card';
  
 //components
 import { LoginComponent } from './login.component';
+import { CreateAccountComponent } from '../create-account/create-account.component'
 
 //routing
 import { LoginRoutes  } from './login-routing.module';
@@ -36,9 +37,11 @@ import { LoginRoutes  } from './login-routing.module';
   ],
   declarations: [
     LoginComponent,
+    CreateAccountComponent
   ],
   exports:[
-    LoginComponent
+    LoginComponent,
+    CreateAccountComponent
   ]
 })
 

@@ -34,9 +34,6 @@ function addUser(){
     $profile_pic = null;
     try {
         if($_POST['rowid'] == 0){
-            //random bytes
-            $bytes = openssl_random_pseudo_bytes(2);
-            $pwd = bin2hex($bytes);
             // prepare and bind
             $stmnt = $conn->prepare("INSERT INTO `user` (`fname`, `lname`, `email`, `password`, `dob`, `user_name`, `bio`, `profile_pic`, `role`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);");
             $stmnt->bind_param("sssssssss", $fname, $lname, $email, $password, $dob, $user_name, $bio, $profile_pic, $role);
@@ -47,7 +44,7 @@ function addUser(){
             $user_name = $_POST['user_name'];
             $bio = $_POST['bio'];
             //hash the password for security using the ripemd160 algorithm
-            $password = hash('ripemd160', $pwd);
+            $password = queryParam('string',hash('ripemd160', $_POST['password']));
             $dob = $_POST['dob'];
             $role = queryParam('string',$_POST['role']);
             if (isset($_FILES['profile_pic'])) {
@@ -119,7 +116,7 @@ function addUser(){
         if($result)
             $msg_resp = "User updated";
         else
-            $msg_resp = str_replace(' ', '-', $_POST["rowid"].'-'.time().'-'.basename($_FILES["profile_pic"]["name"]));
+            $msg_resp = "an error has occured processing your request.";
 
         $myObj->success = $result;
         $myObj->response =  $msg_resp;

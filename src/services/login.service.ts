@@ -15,7 +15,7 @@ export class LoginService {
   ) { }
 
   checkIfEmailExist(email:string): Observable<HttpResponse<{}>> {
-    return this.http.post(this.configUrl, { functionname: 'getName' ,email:email}).pipe(
+    return this.http.post(this.configUrl, { functionname: 'checkIfEmailExist' ,email:email}).pipe(
       map((res: any) => {
         return res;
       })

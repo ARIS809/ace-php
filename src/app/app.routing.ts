@@ -8,6 +8,7 @@ import { CanActivate } from "@angular/router";
 import { Observable } from 'rxjs';
 import { AuthGuard } from './shared/security/auth.guard';
 import { LoginComponent } from './login/login.component';
+import { CreateAccountComponent } from './create-account/create-account.component';
 
 const routes: Routes =[
   {
@@ -52,6 +53,9 @@ const routes: Routes =[
   {
     path: 'login',
     component:LoginComponent
+  },{
+    path:'create-account',
+    component:CreateAccountComponent
   }
 ];
 

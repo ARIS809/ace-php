@@ -22,4 +22,15 @@
 .form-style{
     padding-top: 15%;
 }
+
+.signup-link{
+  cursor: pointer;
+  margin-left: 42%;
+
+}
+
+.signup-link:hover{
+  color: #e91e63;
+  transition-duration: 1s;
+}
   

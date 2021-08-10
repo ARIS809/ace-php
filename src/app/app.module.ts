@@ -17,12 +17,12 @@ import { AuthGuard } from 'app/shared/security/auth.guard';
 import { AuthGuardService } from 'services/auth-guard.service';
 
 import { ToastrModule } from 'ngx-toastr';
-import { LoginModule }  from './login/login.module';
 
 import {
   AgmCoreModule
 } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+
 
 @NgModule({
   imports: [
@@ -44,6 +44,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+
   ],
   providers: [ {provide: APP_BASE_HREF, useValue: '/',},AuthGuard,AuthGuardService],
   bootstrap: [AppComponent]

@@ -41,4 +41,7 @@ export class LoginComponent implements OnInit {
       }
     })
   }
+  createAccount():void{
+    this.router.navigate(['create-account']);
+  }
 }
