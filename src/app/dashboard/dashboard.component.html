@@ -24,7 +24,7 @@
             Like by you
           </div>
           <div *ngIf="post.likes > 0 && post.i_liked == 0" >
-            Like by {{post.likes}} {{post.likes > 1?'Others':'Other'}}
+            {{post.likes}} {{post.likes > 1?'Likes':'Like'}}
           </div>
         </mat-card-actions>
         
