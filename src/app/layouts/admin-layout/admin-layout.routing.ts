@@ -68,6 +68,15 @@ export const AdminLayoutRoutes: Routes = [
       ]
     },
     {
+      path: 'post',
+      children: [
+        {
+          path: '',
+          loadChildren: () => import('../../post/post.module').then(m => m.PostModule)
+        },
+      ]
+    },
+    {
       path: 'logout',
       children: [
         {

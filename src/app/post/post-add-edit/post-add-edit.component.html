@@ -1,18 +1,19 @@
 
 <div class="card-header card-header-danger">
-    <h4 class="card-title">Add Post</h4>
+    <h4 class="card-title">{{this.data.rowid != 0? "Edit Post":"Add Post"}}</h4>
 </div>
 <div class="card-body">
     <form [formGroup]="postForm" (ngSubmit)="savePost()"  method="post" enctype="multipart/form-data">
         <div class="column" >
             <div class="">
                 <div class="">
-                    <a href="javascript:void(0)" class="profile-img">
+                    <a *ngIf="this.data.image == null" href="javascript:void(0)" class="profile-img">
                         <mat-form-field >
                             <input matInput class="img-input" type="file" name="image" (change)="uploadDocument($event)" accept=".png, .pdf, .jpg, .jpeg">
                         </mat-form-field>
                         <img class="selected-img-style" *ngIf="imageSrc!= null" [src]="imageSrc" alt="Selected Image" />
                     </a>
+                    <img *ngIf="this.data.image != null" class="selected-img-style" [src]="postUrl+this.data.image" alt="Selected Image" />
                 </div>
                 <div class="row">
                     <div class="card-body">
@@ -23,6 +24,6 @@
                 </div>
             </div>
         </div>
-        <button [disabled]="!this.postForm.valid" mat-raised-button type="submit" class="btn btn-danger pull-right">Post</button>
+        <button [disabled]="!this.postForm.valid && this.data.rowid == 0" mat-raised-button type="submit" class="btn btn-danger pull-right">{{this.data.rowid != 0? "Edit Post":"Add Post"}}</button>
         <div class="clearfix"></div>
     </form>

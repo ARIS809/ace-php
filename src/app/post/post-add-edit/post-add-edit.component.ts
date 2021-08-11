@@ -9,6 +9,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export interface DialogData {
   rowid: number;
+  image:string;
+  caption:string;
 }
 
 @Component({
@@ -17,6 +19,7 @@ export interface DialogData {
   styleUrls: ['./post-add-edit.component.css']
 })
 export class PostAddEditComponent implements OnInit {
+  postUrl = location.origin+'/ace_file_upload/uploads/post_pics/';
   postForm = this.fb.group({
     caption: ['',[ Validators.required ]],
     image: ['',[ Validators.required ]],
@@ -30,6 +33,11 @@ imageSrc:any = null;
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) { }
   ngOnInit(): void {
+    if(this.data.caption != null && this.data.rowid != 0){
+      this.postForm.controls['caption'].setValue(this.data.caption);
+    }
+      
+    
   }
 
   savePost():void{
@@ -45,7 +53,7 @@ imageSrc:any = null;
   
      this._service.addPost(uploadData).subscribe( (rep) =>{
        if(rep.success){
-        this.toast.success("Post added","Publish Post");
+        this.toast.success(this.data.rowid != 0? "Post Edited":"Post Added","Publish Post");
         this.dialogRef.close();
        }
        else

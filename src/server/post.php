@@ -6,8 +6,8 @@ if($arguments !== null){
     if($arguments->functionname === "getPosts"){
         echo getPosts();
     }
-    else if($arguments->functionname === "getUser"){
-        echo getPost();
+    else if($arguments->functionname === "getMyPosts"){
+        echo getMyPosts();
     }
     else if($arguments->functionname === "likePost"){
         echo likePost();
@@ -53,16 +53,13 @@ function addPost(){
         }else{
             // prepare and bind (password gets changed)
             $stmnt = $conn->prepare("UPDATE `post` 
-                        SET `caption` = ? ,
-                            `image` = ? ,
-                            `user_id` = ? 
+                        SET `caption` = ? 
                             WHERE `rowid` = ?");
 
-            $stmnt->bind_param("sss", $caption, $image, $user_id);
+            $stmnt->bind_param("ss", $caption, $rowid);
                         
             $caption = $_POST['caption'];
-            $image = str_replace(' ', '-', $_POST["rowid"].'-'.time().'-'.basename($_FILES["post_pic"]["name"]));
-            $user_id = $_POST['user_id'];
+            $rowid = $_POST['rowid'];
         }
 
         $result = $stmnt->execute();
@@ -143,13 +140,11 @@ function addPost(){
     return $myJSON;
  }
 
- function getPost(){
-    include 'query_param.php';
-
-   //fetch the arguments sent to the function 
-   $arguments = json_decode(file_get_contents('php://input'));
+ function getMyPosts(){
+    $arguments = json_decode(file_get_contents('php://input'));
    //create connection to DBS
    $conn = include 'DBSConnection.php';
+   include_once 'query_param.php';
    //create an object theat will be return as the server response.
    $myObj = new \stdClass();
    $myObj->response = "";
@@ -158,34 +153,39 @@ function addPost(){
 
    //create an array
    $userArray = array();
-
+   $myId = queryParam("integer",$arguments->user_id);
    try {
-        $rowid = $arguments->rowid;
-        $stmt = " SELECT fname, 
-                         lname, 
-                         DATE_FORMAT(dob, '%Y-%m-%d') as dob, 
-                         rowid, 
-                         user_name, 
-                         email, 
-                         active,
-                         bio,
-                         profile_pic,
-                         role
-                  FROM user 
-                  WHERE rowid = " . queryParam('integer',$rowid) . "
-                  AND active = b'1'";
+       $sql = "SELECT 
+               p.caption, 
+               p.image, 
+               p.rowid,
+               u.profile_pic,
+               u.user_name,
+               null as likes,
+               IF(pl.post_id != 'null', true,false) as i_liked
+               FROM post p
+               LEFT JOIN user u on u.rowid = p.user_id
+               LEFT JOIN post_like pl on pl.post_id = p.rowid AND pl.user_id = {$myId}
+               WHERE p.user_id = {$myId}
+               ORDER BY created_dt desc";
 
-        $result = $conn->query($stmt);
+       $result = $conn->query($sql);
 
-        while ($row = mysqli_fetch_assoc($result)) {
-            $userArray[] = $row;
-        }
+       while ($row = mysqli_fetch_assoc($result)) {
+           $likes = " SELECT COUNT(*) as count FROM post_like WHERE post_id = {$row['rowid']}";
+           $likeResults = $conn->query($likes);
 
+           while ($myLikes = mysqli_fetch_assoc($likeResults)) {
+               $row['likes'] = $myLikes['count'];
+           }
+           $userArray[] = $row;
+       }
+               
 
        $myObj->data = $userArray;
 
        $myObj->success = true;
-       $myObj->response = "User have been fetched.";
+       $myObj->response = "Post have been fetched.";
 
    } catch (Exception $e) {
        $myObj->response = $e->getMessage();

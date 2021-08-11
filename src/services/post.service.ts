@@ -21,8 +21,9 @@ export class PostService {
 
 
   addPost(form:FormData): Observable<{success:boolean}> {
-    this.postPicUpload(form).subscribe( (rep) =>{
-    })
+    if(form.get('rowid') == '0')
+      this.postPicUpload(form).subscribe( (rep) =>{})
+
     return this.http.post(this.configUrl, form).pipe(
       //
       map((res: any) => {
@@ -43,6 +44,15 @@ export class PostService {
   getPosts(): Observable<Post> {
     let user_id = JSON.parse(sessionStorage.getItem("currentUser")).rowid;
     return this.http.post(this.configUrl, { functionname: 'getPosts',user_id:user_id}).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+  getMyPosts(): Observable<Post> {
+    let user_id = JSON.parse(sessionStorage.getItem("currentUser")).rowid;
+    return this.http.post(this.configUrl, { functionname: 'getMyPosts',user_id:user_id}).pipe(
       map((res: any) => {
         return res;
       })

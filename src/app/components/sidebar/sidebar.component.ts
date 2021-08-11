@@ -11,6 +11,7 @@ declare interface RouteInfo {
 export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'Feed',  icon: 'feed', class: '' , roles:['User','Admin','Super']},
     { path: '/users/profile', title: 'My Profile',  icon:'person', class: '',  roles:['User','Admin','Super'] },
+    { path: '/post/view', title: 'My Post',  icon:'dynamic_feed', class: '',  roles:['User','Admin','Super'] },
 
     //User Routes
     { path: '/users/list', title: 'User List',  icon:'manage_accounts', class: '',  roles:['Admin','Super'] },

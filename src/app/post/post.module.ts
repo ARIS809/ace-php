@@ -10,9 +10,16 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import {MatCardModule} from '@angular/material/card';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatGridListModule} from '@angular/material/grid-list';
+import { FlexLayoutModule } from '@angular/flex-layout';
  
 //components
 import { PostAddEditComponent } from './post-add-edit/post-add-edit.component';
+import { PostViewComponent } from './post-view/post-view.component';
+
+//routing
+import { PostRoutes } from './post-routing.module';
 
 
 @NgModule({
@@ -28,14 +35,20 @@ import { PostAddEditComponent } from './post-add-edit/post-add-edit.component';
     MatTooltipModule,
     MatSelectModule,
     ImageCropperModule,
-    MatCardModule
+    MatCardModule,
+    RouterModule.forChild(PostRoutes),
+    MatDialogModule,
+    MatGridListModule,
+    FlexLayoutModule
   ],
   declarations: [
     PostAddEditComponent,
+    PostViewComponent
   ],
   exports:[
-    PostAddEditComponent
+    PostAddEditComponent,
+    PostViewComponent
   ]
 })
 
-export class LoginModule {}
+export class PostModule {}

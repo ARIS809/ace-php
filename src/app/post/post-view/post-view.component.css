@@ -1,0 +1,22 @@
+
+.card {
+    max-width: 400px;
+    padding-bottom: 5%;
+    margin-left: 5%;
+  }
+  
+  .example-header-image {
+    background-size: cover;
+  }
+ 
+  
+  .user_name{
+    padding-top:20%;
+    font-weight: bold;
+  }
+
+  .card-img{
+    max-height: 250px;
+    object-fit: cover;
+    max-width: auto;
+  }

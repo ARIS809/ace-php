@@ -9,12 +9,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+    userUrl:string = "";
+    currProfilePic:string = "";
+    userName:string = "";
     private listTitles: any[];
     location: Location;
       mobile_menu_visible: any = 0;
     private toggleButton: any;
     private sidebarVisible: boolean;
-
+    
     constructor(location: Location,  private element: ElementRef, private router: Router) {
       this.location = location;
           this.sidebarVisible = false;
@@ -32,6 +35,9 @@ export class NavbarComponent implements OnInit {
            this.mobile_menu_visible = 0;
          }
      });
+     this.userUrl = location.origin+'/ace_file_upload/uploads/profile_pics/';
+     this.currProfilePic = JSON.parse(sessionStorage.getItem("currentUser")).profile_pic;
+     this.userName = JSON.parse(sessionStorage.getItem("currentUser")).user_name;
     }
 
     sidebarOpen() {

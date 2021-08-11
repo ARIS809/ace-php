@@ -40,6 +40,18 @@ const routes: Routes =[
     ]
   },
   {
+    path: 'post',
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
+    children: [
+      {
+        path: 'post',
+        loadChildren: () => import('./post/post.module').then(m => m.PostModule),
+        canActivate:[AuthGuard]
+      },
+    ]
+  },
+  {
     path: 'logout',
     pathMatch: 'full',
     children: [
