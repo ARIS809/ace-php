@@ -77,6 +77,15 @@ export const AdminLayoutRoutes: Routes = [
       ]
     },
     {
+      path: 'message',
+      children: [
+        {
+          path: '',
+          loadChildren: () => import('../../message/message.module').then(m => m.MessageModule)
+        },
+      ]
+    },
+    {
       path: 'logout',
       children: [
         {

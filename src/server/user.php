@@ -151,7 +151,9 @@ function addUser(){
                 lname, 
                 dob, 
                 rowid, 
-                role 
+                role,
+                user_name,
+                profile_pic
                 FROM user
                 WHERE rowid <> {$userid}
                 AND active = b'1'";

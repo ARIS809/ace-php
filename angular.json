@@ -22,6 +22,9 @@
               "src/server"
             ],
             "styles": [
+              {
+                "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
+              },
               "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
               "src/scss/material-dashboard.scss",
               "src/assets/css/demo.css",
@@ -37,7 +40,7 @@
               "node_modules/bootstrap-notify/bootstrap-notify.js",
               "node_modules/chartist/dist/chartist.js"
             ],
-            "allowedCommonJsDependencies" : [
+            "allowedCommonJsDependencies": [
               "rxjs/add/operator/filter",
               "jquery",
               "chartist"
@@ -68,8 +71,8 @@
               ]
             },
             "development": {
-             "buildOptimizer": false,
-             "optimization": {
+              "buildOptimizer": false,
+              "optimization": {
                 "scripts": true,
                 "styles": {
                   "minify": false,
@@ -77,8 +80,8 @@
                 },
                 "fonts": true
               },
-             "outputHashing": "all"
-           }
+              "outputHashing": "all"
+            }
           }
         },
         "serve": {
@@ -120,6 +123,9 @@
               "node_modules/chartist/dist/chartist.js"
             ],
             "styles": [
+              {
+                "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
+              },
               "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
               "src/assets/scss/material-dashboard.scss",
               "src/assets/css/demo.css"

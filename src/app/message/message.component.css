@@ -1,0 +1,10 @@
+.avatar{
+    height: 40px;
+    width: 40px;
+    object-fit: cover;
+    top:0; 
+    right:0;
+    border-radius: 60%;
+    padding-right: 2%;
+
+}

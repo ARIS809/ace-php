@@ -1,1 +1,52 @@
-<p>message works!</p>
+<div class="main-content">
+    <div class="container-fluid posting-view">
+        <div fxFill>
+            <div fxFlex="30">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table" style="height: auto; overflow-x: auto;">
+                                    <thead class=" text-primary">
+                                        <th>
+                                            Profile Image
+                                        </th>
+                                        <th>
+                                            User Name
+                                        </th>
+                                        <th>
+                                            
+                                        </th>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let u of users" style="cursor: pointer;" (click)="getMessages(u.rowid, u.user_name,u.profile_pic)">
+                                            <td>
+                                                <img *ngIf="u.profile_pic != null" class="avatar" [src]="userUrl+u.profile_pic" alt="Photo of user">
+                                                <img *ngIf="u.profile_pic == null" class="avatar"  src="./assets/img/faces/no-user.jpeg" />
+                                            </td>
+                                            <td>
+                                                {{u.user_name}} 
+                                            </td>
+                                            <td>
+                                                <button mat-icon-button *ngIf="u.rowid == this.to.id"><span class="material-icons">chat</span></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div fxFlex="70" *ngIf="this.to.id != 0">
+                <kendo-chat style="margin-left:0%;" [messages]="feed | async" [user]="from" (sendMessage)="sendMessage($event)">
+                    <ng-template kendoChatMessageTemplate let-message>
+                        <div [innerHTML]="renderMarkdown(message.text)"></div>
+                    </ng-template>
+                </kendo-chat>  
+            </div>
+        </div>
+    </div>
+</div>
+

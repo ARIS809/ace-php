@@ -52,6 +52,18 @@ const routes: Routes =[
     ]
   },
   {
+    path: 'message',
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
+    children: [
+      {
+        path: 'message',
+        loadChildren: () => import('./message/message.module').then(m => m.MessageModule),
+        canActivate:[AuthGuard]
+      },
+    ]
+  },
+  {
     path: 'logout',
     pathMatch: 'full',
     children: [

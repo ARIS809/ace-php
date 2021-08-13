@@ -10,6 +10,7 @@ declare interface RouteInfo {
 }
 export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'Feed',  icon: 'feed', class: '' , roles:['User','Admin','Super']},
+    { path: '/message/view', title: 'My Messages',  icon:'chat', class: '',  roles:['User','Admin','Super'] },
     { path: '/users/profile', title: 'My Profile',  icon:'person', class: '',  roles:['User','Admin','Super'] },
     { path: '/post/view', title: 'My Post',  icon:'dynamic_feed', class: '',  roles:['User','Admin','Super'] },
 

@@ -22,6 +22,9 @@ import {
   AgmCoreModule
 } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { ChatModule } from '@progress/kendo-angular-conversational-ui';
+
+
 
 
 @NgModule({
@@ -39,6 +42,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
     BrowserModule,
     ToastrModule.forRoot(),
     ImageCropperModule,
+    ChatModule,
 
   ],
   declarations: [

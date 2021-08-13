@@ -13,6 +13,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ChatModule } from '@progress/kendo-angular-conversational-ui';
  
 //components
 import { MessageComponent } from './message.component';
@@ -38,7 +39,8 @@ import { PostRoutes } from './message-routing.module';
     RouterModule.forChild(PostRoutes),
     MatDialogModule,
     MatGridListModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    ChatModule
   ],
   declarations: [
     MessageComponent,
@@ -49,4 +51,4 @@ import { PostRoutes } from './message-routing.module';
   ]
 })
 
-export class PostModule {}
+export class MessageModule {}
