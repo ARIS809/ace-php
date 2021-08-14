@@ -66,7 +66,6 @@ export class PostViewComponent implements OnInit {
 
   deletePost(post_id:any):void{
     this._post_service.deletePost(parseInt(post_id)).subscribe( (rep:any) =>{
-      console.log(rep);
       if(rep.success){
         this.toast.success("post deleted","Delete Post");
       }else{
