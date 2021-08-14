@@ -13,7 +13,7 @@
               <mat-card-subtitle class="user_name">{{post.user_name}}</mat-card-subtitle>
               <div style="padding-left:30%;">
                 <button mat-icon-button style="color:rgb(5, 127, 220);" (click)="opendPostEdit(post.rowid, post.image, post.caption)" ><span class="material-icons">edit</span></button>
-                <button mat-icon-button style="color:rgb(220, 19, 5);"><span class="material-icons">delete</span></button>
+                <button mat-icon-button style="color:rgb(220, 19, 5);" (click)="deletePost(post.rowid)"><span class="material-icons">delete</span></button>
               </div>
             </mat-card-header>
             <img mat-card-image class="card-img" [src]="postUrl+post.image" alt="">

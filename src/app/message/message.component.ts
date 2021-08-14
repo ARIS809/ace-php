@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Subject, merge, from, Observable } from 'rxjs';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { Subject, merge, from, Observable, Subscription } from 'rxjs';
 import { scan } from 'rxjs/operators';
 
 import { Message, User, SendMessageEvent } from '@progress/kendo-angular-conversational-ui';
@@ -15,6 +15,7 @@ import { MessageService } from 'services/message.service';
   styleUrls: ['./message.component.css']
 })
 export class MessageComponent implements OnInit {
+  fakeWebSocket:any;
   users:any;
   userUrl = location.origin+'/ace_file_upload/uploads/profile_pics/';
   constructor(
@@ -75,9 +76,9 @@ export class MessageComponent implements OnInit {
     this.to.id = id;
     this.to.name = name;
     
-    setInterval(()=>{
+    this.fakeWebSocket =  setInterval(()=>{
       let messages = [];
-      this._m_service.getMessages(this.to.id).subscribe( (rep:any) =>{
+       this._m_service.getMessages(this.to.id).subscribe( (rep:any) =>{
         rep.forEach(e => {
           if(e.from_userid == this.from.id){
             let message: Message = {
@@ -97,10 +98,13 @@ export class MessageComponent implements OnInit {
           }
       });
     }) 
-    },250);
+    },300);
 
   
     if(avatar != null)
       this.to.avatarUrl = this.userUrl+avatar;
+  }
+  ngOnDestroy(){
+    clearInterval(this.fakeWebSocket);
   }
 }

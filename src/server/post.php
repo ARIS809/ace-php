@@ -15,6 +15,9 @@ if($arguments !== null){
     else if($arguments->functionname === "unlikePost"){
         echo unlikePost();
     }
+    else if($arguments->functionname === "deletePost"){
+        echo deletePost();
+    }
     else{
         echo "No function found";
     }
@@ -167,6 +170,7 @@ function addPost(){
                LEFT JOIN user u on u.rowid = p.user_id
                LEFT JOIN post_like pl on pl.post_id = p.rowid AND pl.user_id = {$myId}
                WHERE p.user_id = {$myId}
+               AND p.active = b'1'
                ORDER BY created_dt desc";
 
        $result = $conn->query($sql);
@@ -270,5 +274,41 @@ function unlikePost(){
     $myJSON = json_encode($return);
 
     return $myJSON;
+}
+
+function deletePost(){
+    $conn = include_once 'DBSConnection.php';
+    include_once 'query_param.php';
+    $arguments = json_decode(file_get_contents('php://input'));
+
+    $return = new \stdClass();
+    $return->success = false;
+    $return->response = "";
+    
+
+    try{
+        // prepare and bind
+         // prepare and bind
+         $stmnt = $conn->prepare( "UPDATE `post` SET active = b'0' WHERE rowid = ?");
+
+         $stmnt->bind_param("i", $rowid);
+        
+        $rowid =  queryParam('integer',$arguments->post_id);
+
+        $result = $stmnt->execute();
+
+        $stmnt->close();
+        $conn->close(); 
+
+        $return->success = $result;
+        $return->response = "Post Deleted";
+    }catch(Exception $error){
+        $return->success = false;
+        $return->response = "an error occured while trying to process your request.";
+        $return->error = $error;
+    }
+
+    $myObj = json_encode($return);
+    return $myObj;
 }
 ?>

@@ -76,4 +76,12 @@ export class PostService {
       })
     );
   }
+
+  deletePost(post_id): Observable<Post> {
+    return this.http.post(this.configUrl, { functionname: 'deletePost', post_id:post_id}).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
 }
